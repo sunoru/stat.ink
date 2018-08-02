@@ -137,7 +137,7 @@ init-by-archive: \
 	resource
 
 test: init
-	./composer.phar exec codecept run
+	COMPOSER_ALLOW_SUPERUSER=1 ./composer.phar exec codecept run
 
 docker: init-by-archive migrate-db
 	sudo docker build -t jp3cki/statink .
@@ -151,11 +151,11 @@ resource: $(RESOURCE_TARGETS) $(ADDITIONAL_LICENSES)
 	./yii map-image2/generate
 
 composer-update: composer.phar
-	./composer.phar self-update
+	COMPOSER_ALLOW_SUPERUSER=1 ./composer.phar self-update
 	touch -r composer.json composer.phar
 
 vendor: composer.phar composer.lock
-	php composer.phar install --prefer-dist --profile
+	COMPOSER_ALLOW_SUPERUSER=1 ./composer.phar install --prefer-dist --profile
 	touch -r composer.lock vendor
 
 node_modules: package.json
@@ -205,7 +205,7 @@ composer.phar:
 	touch -r composer.json composer.phar
 
 composer.lock: composer.json composer.phar
-	./composer.phar update -vvv
+	COMPOSER_ALLOW_SUPERUSER=1 ./composer.phar update -vvv
 	touch -r composer.json composer.lock
 
 %.br: %

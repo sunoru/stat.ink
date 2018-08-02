@@ -4,29 +4,23 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "94c747cc26b1d2b9fcca2a1ae370e053",
+    "content-hash": "7db934689cc30bfd2eec9ba43229d3b8",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
-            "version": "v3.3.7",
+            "version": "v4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "0b9c4a4007c44201dce9a6cc1a38407005c26c86"
+                "reference": "8a628b943cf31ca0a002c08af661a95772480225"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/0b9c4a4007c44201dce9a6cc1a38407005c26c86",
-                "reference": "0b9c4a4007c44201dce9a6cc1a38407005c26c86",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/8a628b943cf31ca0a002c08af661a95772480225",
+                "reference": "8a628b943cf31ca0a002c08af661a95772480225",
                 "shasum": null
             },
-            "require": {
-                "bower-asset/jquery": ">=1.9.1,<4.0"
-            },
-            "type": "bower-asset",
-            "license": [
-                "MIT"
-            ]
+            "type": "bower-asset"
         },
         {
             "name": "bower-asset/bootstrap-toggle",
@@ -416,6 +410,25 @@
             },
             "require": {
                 "bower-asset/moment": ">=2.9.0"
+            },
+            "type": "bower-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "bower-asset/popper.js",
+            "version": "v1.12.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FezVrasta/popper.js.git",
+                "reference": "bf60988e6ee6f7b73e7be8088fd325985bb6e7f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FezVrasta/popper.js/zipball/bf60988e6ee6f7b73e7be8088fd325985bb6e7f4",
+                "reference": "bf60988e6ee6f7b73e7be8088fd325985bb6e7f4",
+                "shasum": null
             },
             "type": "bower-asset",
             "license": [
@@ -2134,31 +2147,36 @@
         },
         {
             "name": "yiisoft/yii2-bootstrap",
-            "version": "dev-master",
+            "version": "2.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap.git",
-                "reference": "3d40965ca284aa70081fbbd679cf2c3686160726"
+                "reference": "8613e504bd5be6f78eb9b8504aafc5843184704a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/3d40965ca284aa70081fbbd679cf2c3686160726",
-                "reference": "3d40965ca284aa70081fbbd679cf2c3686160726",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/8613e504bd5be6f78eb9b8504aafc5843184704a",
+                "reference": "8613e504bd5be6f78eb9b8504aafc5843184704a",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/bootstrap": "3.3.* | 3.2.* | 3.1.*",
+                "bower-asset/bootstrap": "~4.0.0@beta",
+                "bower-asset/popper.js": "~1.12.0",
                 "yiisoft/yii2": "~2.0.6"
             },
             "type": "yii2-extension",
             "extra": {
                 "branch-alias": {
                     "dev-master": "2.0.x-dev"
+                },
+                "asset-installer-paths": {
+                    "npm-asset-library": "vendor/npm",
+                    "bower-asset-library": "vendor/bower"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "yii\\bootstrap\\": "src"
+                    "yii\\bootstrap\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2167,22 +2185,8 @@
             ],
             "authors": [
                 {
-                    "name": "Paul Klimov",
-                    "email": "klimov.paul@gmail.com"
-                },
-                {
-                    "name": "Alexander Makarov",
-                    "email": "sam@rmcreative.ru",
-                    "homepage": "http://rmcreative.ru/"
-                },
-                {
-                    "name": "Antonio Ramirez",
-                    "email": "amigo.cobos@gmail.com"
-                },
-                {
                     "name": "Qiang Xue",
-                    "email": "qiang.xue@gmail.com",
-                    "homepage": "http://www.yiiframework.com/"
+                    "email": "qiang.xue@gmail.com"
                 }
             ],
             "description": "The Twitter Bootstrap extension for the Yii framework",
@@ -2190,7 +2194,7 @@
                 "bootstrap",
                 "yii2"
             ],
-            "time": "2018-05-04T06:55:14+00:00"
+            "time": "2018-02-25T09:53:58+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -5183,21 +5187,21 @@
         },
         {
             "name": "yiisoft/yii2-debug",
-            "version": "dev-master",
+            "version": "dev-bs4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/yiisoft/yii2-debug.git",
-                "reference": "d729a2c8f959dbe34f4903039374687a3e64e32f"
+                "url": "https://github.com/fetus-hina/yii2-debug.git",
+                "reference": "25b6165063a8bec9ddf2fa332115e990fc6a0637"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/d729a2c8f959dbe34f4903039374687a3e64e32f",
-                "reference": "d729a2c8f959dbe34f4903039374687a3e64e32f",
+                "url": "https://api.github.com/repos/fetus-hina/yii2-debug/zipball/25b6165063a8bec9ddf2fa332115e990fc6a0637",
+                "reference": "25b6165063a8bec9ddf2fa332115e990fc6a0637",
                 "shasum": ""
             },
             "require": {
                 "yiisoft/yii2": "~2.0.13",
-                "yiisoft/yii2-bootstrap": "~2.0.0"
+                "yiisoft/yii2-bootstrap": "*"
             },
             "type": "yii2-extension",
             "extra": {
@@ -5210,7 +5214,6 @@
                     "yii\\debug\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -5226,27 +5229,34 @@
                 "debugger",
                 "yii2"
             ],
-            "time": "2018-08-18T18:39:36+00:00"
+            "support": {
+                "issues": "https://github.com/yiisoft/yii2-debug/issues",
+                "forum": "http://www.yiiframework.com/forum/",
+                "wiki": "http://www.yiiframework.com/wiki/",
+                "irc": "irc://irc.freenode.net/yii",
+                "source": "https://github.com/yiisoft/yii2-debug"
+            },
+            "time": "2018-07-10T12:52:20+00:00"
         },
         {
             "name": "yiisoft/yii2-gii",
-            "version": "dev-master",
+            "version": "dev-bs4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/yiisoft/yii2-gii.git",
-                "reference": "60c53d399ebf12cac9b8daa1fa9d81b8b1ee9a91"
+                "url": "https://github.com/fetus-hina/yii2-gii.git",
+                "reference": "8ae149e25b46f1a023d1c9ca9c6a77ffd6f203a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/60c53d399ebf12cac9b8daa1fa9d81b8b1ee9a91",
-                "reference": "60c53d399ebf12cac9b8daa1fa9d81b8b1ee9a91",
+                "url": "https://api.github.com/repos/fetus-hina/yii2-gii/zipball/8ae149e25b46f1a023d1c9ca9c6a77ffd6f203a0",
+                "reference": "8ae149e25b46f1a023d1c9ca9c6a77ffd6f203a0",
                 "shasum": ""
             },
             "require": {
                 "bower-asset/typeahead.js": "0.10.* | ~0.11.0",
                 "phpspec/php-diff": ">=1.0.2",
                 "yiisoft/yii2": "~2.0.14",
-                "yiisoft/yii2-bootstrap": "~2.0.0"
+                "yiisoft/yii2-bootstrap": "*"
             },
             "type": "yii2-extension",
             "extra": {
@@ -5259,7 +5269,6 @@
                     "yii\\gii\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -5275,7 +5284,14 @@
                 "gii",
                 "yii2"
             ],
-            "time": "2018-07-11T19:23:16+00:00"
+            "support": {
+                "issues": "https://github.com/yiisoft/yii2-gii/issues",
+                "forum": "http://www.yiiframework.com/forum/",
+                "wiki": "http://www.yiiframework.com/wiki/",
+                "irc": "irc://irc.freenode.net/yii",
+                "source": "https://github.com/yiisoft/yii2-gii"
+            },
+            "time": "2018-07-10T12:47:51+00:00"
         }
     ],
     "aliases": [],
