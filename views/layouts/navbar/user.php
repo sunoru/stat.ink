@@ -1,122 +1,67 @@
 <?php
+use app\components\widgets\FA;
+use app\components\widgets\NavBarMenu;
+use app\components\widgets\UserIcon;
 use yii\helpers\Html;
 
 $user = Yii::$app->user->identity ?? null;
-
-$this->registerCss('.fa-twitter{color:#1da1f2}');
-?>
-<?= Html::a(
-  implode('', [
-    $user
-      ? Html::img($user->iconUrl, [
-        'class' => 'fa fa-fw',
-        'style' => [
-          'width' => '1em',
-          'height' => '1em',
-          'background-color' => '#fff',
-        ],
-      ])
-      : Html::tag('span', '', ['class' => 'fa fa-fw fa-user']),
-    $user
-      ? Html::encode($user->name)
-      : Html::encode(Yii::t('app', 'Guest')),
-    ' ',
-    Html::tag('span', '', ['class' => 'caret']),
-  ]),
-  'javascript:;',
-  [
-    'class' => 'dropdown-toggle',
-    'data' => [
-      'toggle' => 'dropdown',
+echo NavBarMenu::widget([
+  'icon' => $user ? FA::hack(UserIcon::widget())->fw() : FA::fas('user')->fw(),
+  'label' => $user->name ?? Yii::t('app', 'Guest'),
+  'items' => [
+    $user ? [
+      'icon' => FA::fas('user')->fw(),
+      'label' => Yii::t('app', 'Your Battles'),
+      'href' => ['/show-user/profile', 'screen_name' => $user->screen_name],
+    ] : false,
+    $user ? [
+      'icon' => FA::hack('┣')->fw(),
+      'label' => Yii::t('app', 'Splatoon 2'),
+      'href' => ['/show-v2/user', 'screen_name' => $user->screen_name],
+    ] : false,
+    $user ? [
+      'icon' => FA::hack('┗')->fw(),
+      'label' => Yii::t('app', 'Splatoon'),
+      'href' => ['/show/user', 'screen_name' => $user->screen_name],
+    ] : false,
+    $user ? [
+      'icon' => FA::fas('wrench')->fw(),
+      'label' => Yii::t('app', 'Profile and Settings'),
+      'href' => ['/user/profile'],
+    ] : false,
+    $user ? null : false,
+    $user ? [
+      'icon' => FA::fas('sign-out-alt')->fw(),
+      'label' => Yii::t('app', 'Logout'),
+      'href' => ['/user/logout'],
+    ] : false,
+    $user ? false : [
+      'icon' => FA::fas('sign-in-alt')->fw(),
+      'label' => Yii::t('app', 'Login'),
+      'href' => ['/user/login'],
     ],
-    'role' => 'button',
-    'aria-haspopup' => 'true',
-    'aria-expanded' => 'false',
-  ]
-) . "\n" ?>
-<?= Html::tag('ul', implode('', array_merge(
-  $user
-    ? [
-      Html::tag('li', Html::a(
-        implode('', [
-          Html::tag('span', '', ['class' => 'fa fa-fw fa-user']),
-          Html::encode(Yii::t('app', 'Your Battles')),
-        ]),
-        ['/show-user/profile', 'screen_name' => $user->screen_name]
-      )),
-      Html::tag('li', Html::a(
-        implode('', [
-          Html::tag('span', '┣', ['class' => 'fa fa-fw']),
-          Html::encode(Yii::t('app', 'Splatoon 2')),
-        ]),
-        ['/show-v2/user', 'screen_name' => $user->screen_name]
-      )),
-      Html::tag('li', Html::a(
-        implode('', [
-          Html::tag('span', '┗', ['class' => 'fa fa-fw']),
-          Html::encode(Yii::t('app', 'Splatoon')),
-        ]),
-        ['/show/user', 'screen_name' => $user->screen_name]
-      )),
-      Html::tag('li', Html::a(
-        implode('', [
-          Html::tag('span', '', ['class' => 'fa fa-fw fa-wrench']),
-          Html::encode(Yii::t('app', 'Profile and Settings')),
-        ]),
-        ['/user/profile']
-      )),
-      Html::tag('li', '', ['class' => 'divider']),
-      Html::tag('li', Html::a(
-        implode('', [
-          Html::tag('span', '', ['class' => 'fa fa-fw fa-sign-out-alt']),
-          Html::encode(Yii::t('app', 'Logout')),
-        ]),
-        ['/user/logout']
-      )),
-    ]
-    : [
-      Html::tag('li', Html::a(
-        implode('', [
-          Html::tag('span', '', ['class' => 'fa fa-fw fa-sign-in-alt']),
-          Html::encode(Yii::t('app', 'Login')),
-        ]),
-        ['/user/login']
-      )),
-      (Yii::$app->params['twitter']['read_enabled'] ?? false)
-        ? Html::tag('li', Html::a(
-          implode('', [
-            Html::tag('span', '┗', ['class' => 'fa fa-fw']),
-            Html::tag('span', '', ['class' => 'fab fa-fw fa-twitter']),
-            Html::encode(Yii::t('app', 'Log in with Twitter')),
-          ]),
-          ['/user/login-with-twitter']
-        ))
-        : '',
-      Html::tag('li', Html::a(
-        implode('', [
-          Html::tag('span', '', ['class' => 'fa fa-fw fa-plus']),
-          Html::encode(Yii::t('app', 'Register')),
-        ]),
-        ['/user/register']
-      )),
+    $user || !(Yii::$app->params['twitter']['read_enabled'] ?? false) ? false : [
+      'icon' => FA::hack('┗')->fw() . FA::fab('twitter')->fw(),
+      'label' => Yii::t('app', 'Log in with Twitter'),
+      'href' => ['/user/login-with-twitter'],
     ],
-  [
-    Html::tag('li', '', ['class' => 'divider']),
-    Html::tag('li', Html::a(
-      implode('', [
-        Html::tag('span', '', ['class' => 'far fa-fw']),
-        Html::encode(Yii::t('app', 'Color-Blind Support')),
-      ]),
-      'javascript:;',
-      ['id' => 'toggle-color-lock']
-    )),
-    Html::tag('li', Html::a(
-      implode('', [
-        Html::tag('span', '', ['class' => 'far fa-fw']),
-        Html::encode(Yii::t('app', 'Use full width of the screen')),
-      ]),
-      'javascript:;',
-      ['id' => 'toggle-use-fluid']
-    )),
-  ]
-)), ['class' => 'dropdown-menu']) ?>
+    $user ? false : [
+      'icon' => FA::fas('plus')->fw(),
+      'label' => Yii::t('app', 'Register'),
+      'href' => ['/user/register'],
+    ],
+    null,
+    [
+      'icon' => FA::far(null)->fw(),
+      'label' => Yii::t('app', 'Color-Blind Support'),
+      'href' => 'javascript:;',
+      'options' => ['id' => 'toggle-color-lock'],
+    ],
+    [
+      'icon' => FA::far(null)->fw(),
+      'label' => Yii::t('app', 'Use full width of the screen'),
+      'href' => 'javascript:;',
+      'options' => ['id' => 'toggle-use-fluid'],
+    ],
+  ],
+]);

@@ -13,7 +13,7 @@ class FontAwesomeAsset extends AssetBundle
 {
     public $sourcePath = '@npm/fortawesome--fontawesome-free';
     public $css = [
-        'css/all.min.css',
+        'css/fontawesome.min.css',
     ];
     public $publishOptions = [
         'only' => [
@@ -21,4 +21,32 @@ class FontAwesomeAsset extends AssetBundle
             'webfonts/*',
         ],
     ];
+
+    public function load(string $type): self
+    {
+        if ($file = $this->type2file($type)) {
+            if (!in_array($file, $this->css, true)) {
+                $this->css[] = $file;
+            }
+        }
+
+        return $this;
+    }
+
+    private function type2file(string $type): ?string
+    {
+        switch ($type) {
+            case 'fa':
+            case 'fas':
+                return 'css/solid.min.css';
+
+            case 'far':
+                return 'css/regular.min.css';
+
+            case 'fab':
+                return 'css/brands.min.css';
+        }
+
+        return null;
+    }
 }
