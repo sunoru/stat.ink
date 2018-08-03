@@ -21,6 +21,7 @@
 /config/twitter.php
 /config/version.php
 /node_modules
+/package-lock.json
 /phpunit.xml
 /resources/.compiled
 /resources/app-link-logos/*.br

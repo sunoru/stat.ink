@@ -14,6 +14,7 @@ class FA extends Widget
     public $icon = null;
     public $type = 'fas';
     public $content = null;
+    public $options = [];
 
     private $asset;
 
@@ -87,13 +88,13 @@ class FA extends Widget
 
         $this->asset->load($this->type);
 
-        return Html::tag($this->tag, $this->content ?? '', [
+        return Html::tag($this->tag, $this->content ?? '', array_merge_recursive([
             'id' => $this->id,
             'class' => array_filter([
                 $this->type,
                 $this->isFW ? 'fa-fw' : null,
                 $this->icon ? 'fa-' . $this->icon : null,
             ]),
-        ]);
+        ], $this->options));
     }
 }

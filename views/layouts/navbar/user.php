@@ -1,8 +1,13 @@
 <?php
+use app\assets\App2Asset;
 use app\components\widgets\FA;
 use app\components\widgets\NavBarMenu;
 use app\components\widgets\UserIcon;
 use yii\helpers\Html;
+
+App2Asset::register($this)
+  ->addJs('navbar-color-blind.min.js')
+  ->addJs('navbar-fluid.min.js');
 
 $user = Yii::$app->user->identity ?? null;
 echo NavBarMenu::widget([
@@ -55,13 +60,17 @@ echo NavBarMenu::widget([
       'icon' => FA::far(null)->fw(),
       'label' => Yii::t('app', 'Color-Blind Support'),
       'href' => 'javascript:;',
-      'options' => ['id' => 'toggle-color-lock'],
+      'options' => [
+        'class' => 'toggle-color-lock',
+      ],
     ],
     [
       'icon' => FA::far(null)->fw(),
       'label' => Yii::t('app', 'Use full width of the screen'),
       'href' => 'javascript:;',
-      'options' => ['id' => 'toggle-use-fluid'],
+      'options' => [
+        'class' => 'toggle-use-fluid',
+      ],
     ],
   ],
 ]);

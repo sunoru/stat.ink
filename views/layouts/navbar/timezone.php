@@ -1,10 +1,65 @@
 <?php
+use app\components\widgets\FA;
+use app\components\widgets\NavBarMenu;
 use app\models\Country;
 use app\models\Timezone;
 use app\models\TimezoneGroup;
 use yii\helpers\Html;
 
 $currentTZ = Yii::$app->timeZone;
+$formatTimezone = function (Timezone $tz) use ($currentTZ): array {
+  // {{{
+  $flags = implode('', array_map(
+    function (Country $country): string {
+      $flag = Html::tag('span', '', ['class' => [
+        'flag-icon',
+        'flag-icon-' . $country->key,
+      ]]);
+      return FA::hack($flag)->fw();
+    },
+    $tz->countries
+  ));
+
+  return [
+    'icon' => FA::fas('check')->fw() . $flags,
+    'label' => Yii::t('app-tz', $tz->name),
+    'href' => 'javascript:;',
+    'options' => [
+      'class' => 'timezone-change',
+      'data' => [
+        'tz' => $tz->identifier,
+      ],
+    ],
+  ];
+  // }}}
+};
+
+echo NavBarMenu::widget([
+  'icon' => FA::far('clock')->fw(),
+  'label' => Yii::t('app', 'Time Zone'),
+  'items' => array_merge(
+    [
+      $formatTimezone(Timezone::findOne(['identifier' => $currentTZ])), // special display: current TZ
+      null,
+    ],
+    array_map(
+      function (TimezoneGroup $group) use ($formatTimezone) {
+        if (!$group->timezones) {
+          return false;
+        }
+
+        return [
+          'icon' => null,
+          'label' => Yii::t('app', $group->name),
+          'href' => 'javascript:;',
+          'items' => array_map($formatTimezone, $group->timezones),
+        ];
+      },
+      TimezoneGroup::find()->with(['timezones', 'timezones.countries'])->all()
+    )
+  ),
+]);
+__halt_compiler();
 ?>
 <?= Html::a(
   implode('', [

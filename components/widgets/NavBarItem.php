@@ -27,7 +27,7 @@ class NavBarItem extends Widget
         return Html::a(
             $this->icon . Yii::$app->formatter->format($this->label, $this->labelFormat),
             $this->href,
-            ArrayHelper::merge([
+            array_merge_recursive([
                 'class' => ['dropdown-item'],
                 'id' => $this->id,
             ], $this->options)
