@@ -87,24 +87,20 @@ class SnsWidget extends Widget
     {
         PermalinkDialogAsset::register($this->view);
         $id = $this->id . '-permalink';
-        $this->view->registerCss(sprintf(
-            '.label-permalink{%s}',
-            Html::cssStyleFromArray([
-                'cursor'            => 'pointer',
-                'display'           => 'inline-block',
-                'font-size'         => '11px',
-                'font-weight'       => '500',
-                'height'            => '20px',
-                'padding'           => '5px 8px 1px 6px',
-                'vertical-align'    => 'top',
-            ])
-        ));
-        $this->view->registerCss(sprintf(
-            '.label-permalink:hover{%s}',
-            Html::cssStyleFromArray([
-                'background-color'  => '#1b3a63',
-            ])
-        ));
+        $dialog = Yii::createObject([
+            'class' => Dialog::class,
+            'title' => Yii::t('app', 'Permalink'),
+            'footer' => Dialog::FOOTER_CLOSE,
+            'body' => sprintf(
+                '<p>%s</p>%s',
+                Html::encode(Yii::t('app', 'Please copy this URL:')),
+                Html::textInput('', 'url', [
+                    'class' => 'form-control',
+                    'readonly' => true,
+                ])
+            ),
+        ]);
+
         return Html::tag(
             'span',
             implode(' ', [
@@ -114,17 +110,16 @@ class SnsWidget extends Widget
             [
                 'id' => $id,
                 'class' => [
-                    'label',
-                    'label-success',
-                    'label-permalink',
+                    'badge',
+                    'badge-success',
+                    'badge-permalink',
                     'auto-tooltip',
                 ],
                 'data' => [
-                    'dialog-title' => Yii::t('app', 'Permalink'),
-                    'dialog-hint' => Yii::t('app', 'Please copy this URL:'),
+                    'target' => '#' . $dialog->id,
                 ],
             ]
-        );
+        ) . $dialog;
     }
 
     protected function procFeed()

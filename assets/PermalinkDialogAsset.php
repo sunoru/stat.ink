@@ -13,12 +13,16 @@ use yii\web\JqueryAsset;
 
 class PermalinkDialogAsset extends AssetBundle
 {
-    public $sourcePath = '@app/resources/.compiled/stat.ink';
+    public $sourcePath = '@app/resources/stat.ink-2/dest';
+    public $css = [
+        'permalink.min.css',
+    ];
     public $js = [
-        'permalink-dialog.js',
+        'permalink.min.js',
     ];
     public $depends = [
-        JqueryAsset::class,
+        AppAsset::class,
         BootstrapPluginAsset::class,
+        JqueryAsset::class,
     ];
 }
