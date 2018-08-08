@@ -44,7 +44,7 @@ $languages = array_map(
       'labelFormat' => 'raw',
       'label' => implode('', [
         Html::encode(sprintf('%s / %s', $lang->name, $lang->name_en)),
-        Html::tag('span', $levelIcon, ['class' => 'ml-2']),
+        Html::tag('span', $levelIcon, ['class' => 'pl-2']),
       ]),
       'options' => [
         'hreflang' => $lang->lang,
