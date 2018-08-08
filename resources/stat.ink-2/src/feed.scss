@@ -1,0 +1,18 @@
+/*! Copyright (C) 2018 AIZAWA Hina | MIT License */
+
+.badge-feed {
+  cursor: pointer;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  height: 20px;
+  padding: 5px 6px 1px;
+  vertical-align: top;
+  background-color: #ff7010;
+  color: #ffffff;
+
+  &[href]:hover {
+    background-color: #dc5800;
+    color: #ffffff;
+  }
+}

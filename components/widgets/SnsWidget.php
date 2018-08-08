@@ -9,6 +9,7 @@
 namespace app\components\widgets;
 
 use Yii;
+use app\assets\App2Asset;
 use app\assets\PermalinkDialogAsset;
 use jp3cki\yii2\twitter\widget\TweetButton;
 use yii\base\Widget;
@@ -128,31 +129,19 @@ class SnsWidget extends Widget
         if (!$this->feedUrl) {
             return null;
         }
-        $this->view->registerCss(sprintf(
-            '.label-feed{%s}.label-feed[href]:hover{%s}',
-            Html::cssStyleFromArray([
-                'cursor'            => 'pointer',
-                'display'           => 'inline-block',
-                'font-size'         => '11px',
-                'font-weight'       => '500',
-                'height'            => '20px',
-                'padding'           => '5px 6px 1px',
-                'vertical-align'    => 'top',
-                'background-color'  => '#ff7010',
-            ]),
-            Html::cssStyleFromArray([
-                'background-color'  => '#dc5800',
-            ])
-        ));
+
+        App2Asset::register($this->view)
+            ->addCss('feed.min.css');
+
         return Html::tag(
             'a',
-            Html::tag('span', '', ['class' => 'fa fa-fw fa-rss']),
+            FA::fas('rss')->fw(),
             [
                 'id' => $id,
                 'class' => [
-                    'label',
-                    'label-warning',
-                    'label-feed',
+                    'badge',
+                    'badge-warning',
+                    'badge-feed',
                     'auto-tooltip',
                 ],
                 'href' => $this->feedUrl,

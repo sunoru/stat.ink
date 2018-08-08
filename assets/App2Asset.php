@@ -31,4 +31,12 @@ class App2Asset extends AssetBundle
         }
         return $this;
     }
+
+    public function addCss(string $filename): self
+    {
+        if (!in_array($filename, $this->css, true)) {
+            $this->css[] = $filename;
+        }
+        return $this;
+    }
 }

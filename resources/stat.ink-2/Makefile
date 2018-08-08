@@ -46,6 +46,7 @@ dest/%.css: src/%.scss $(NODE_DIR)
 %.br: % $(BROTLI_BIN)
 	@rm -f $@
 	$(BROTLI_BIN) -kZ -o $@ $<
+	@touch $@
 
 $(ZOPFLI_BIN):
 	make -C $(MY_BIN_DIR) zopfli
