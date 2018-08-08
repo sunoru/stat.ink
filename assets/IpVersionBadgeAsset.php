@@ -11,10 +11,10 @@ use yii\web\AssetBundle;
 
 class IpVersionBadgeAsset extends AssetBundle
 {
-    public $sourcePath = '@app/resources/.compiled/ip-version';
+    public $sourcePath = '@app/resources/stat.ink-2/dest';
     public $css = [
         'https://fonts.googleapis.com/css?family=Audiowide',
-        'badge.css',
+        'ip-version-badge.min.css',
     ];
     public $depends = [
         'yii\bootstrap\BootstrapAsset',
