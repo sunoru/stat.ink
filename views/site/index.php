@@ -2,7 +2,7 @@
 use app\assets\CounterAsset;
 use app\assets\PaintballAsset;
 use app\components\helpers\CombinedBattles;
-use app\components\widgets\ChangeLangDropdown;
+use app\components\widgets\FA;
 use app\components\widgets\SnsWidget;
 use app\components\widgets\battle\BattleListWidget;
 use app\models\Battle;
@@ -19,14 +19,21 @@ PaintballAsset::register($this);
 ?>
 <div class="container">
   <div class="text-right" style="margin-bottom:10px">
-    <?= ChangeLangDropdown::widget([
-      'dropdownOptions' => [
-        'style' => [
-          'left' => 'auto',
-          'right' => '0',
+    <?= Html::button(
+      implode(' ', [
+        FA::fas('language')->fw(),
+        Html::encode('Switch Language / 言語切替'),
+        FA::fas('caret-down')->fw(),
+      ]),
+      [
+        'type' => 'button',
+        'class' => 'btn btn-secondary',
+        'data' => [
+          'toggle' => 'modal',
+          'target' => '#language-dialog',
         ],
-      ],
-    ]) . "\n" ?>
+      ]
+    ) . "\n" ?>
   </div>
   <p class="text-right" style="margin-bottom:0">
     <?= Html::tag(

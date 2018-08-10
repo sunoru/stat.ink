@@ -1,5 +1,6 @@
 <?php
 use app\assets\PaintballAsset;
+use app\components\widgets\FA;
 use app\components\widgets\IpVersionBadgeWidget;
 use yii\helpers\Html;
 
@@ -46,7 +47,9 @@ $this->registerCss('.ip-via-badge{position:relative;top:-3px}');
           <?= $this->render('/layouts/navbar/user') . "\n" ?>
         </li>
         <li class="nav-item dropdown">
-          <?= $this->render('/layouts/navbar/language') . "\n" ?>
+          <a href="javascript:;" class="nav-link dropdown-toggle" role="button" data-toggle="modal" data-target="#language-dialog" aria-haspopup="true" aria-expanded="false">
+            <?= FA::fas('language')->fw() . ' Language' . "\n" ?>
+          </a>
         </li>
         <li class="nav-item dropdown">
           <?= $this->render('/layouts/navbar/timezone') . "\n" ?>

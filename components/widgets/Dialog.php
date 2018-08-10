@@ -26,6 +26,7 @@ class Dialog extends Widget
     public $size = self::SIZE_MEDIUM;
     public $titleFormat = 'text';
     public $headerOptions = [];
+    public $wrapBody = true;
 
     public static function begin($config = [])
     {
@@ -122,7 +123,9 @@ class Dialog extends Widget
 
     protected function renderBody(): string
     {
-        return Html::tag('div', $this->body, ['class' => 'modal-body']);
+        return $this->wrapBody
+            ? Html::tag('div', $this->body, ['class' => 'modal-body'])
+            : $this->body;
     }
 
     protected function renderFooter(): string
