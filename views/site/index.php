@@ -18,7 +18,7 @@ CounterAsset::register($this);
 PaintballAsset::register($this);
 ?>
 <div class="container">
-  <div class="text-right" style="margin-bottom:10px">
+  <div class="text-right mb-3">
     <?= Html::button(
       implode(' ', [
         FA::fas('language')->fw(),
@@ -27,10 +27,25 @@ PaintballAsset::register($this);
       ]),
       [
         'type' => 'button',
-        'class' => 'btn btn-secondary',
+        'class' => 'btn btn-secondary btn-block mb-4',
         'data' => [
           'toggle' => 'modal',
           'target' => '#language-dialog',
+        ],
+      ]
+    ) . "\n" ?>
+    <?= Html::button(
+      implode(' ', [
+        FA::far('clock')->fw(),
+        Html::encode(Yii::t('app', 'Time Zone')),
+        FA::fas('caret-down')->fw(),
+      ]),
+      [
+        'type' => 'button',
+        'class' => 'btn btn-secondary btn-block mb-4',
+        'data' => [
+          'toggle' => 'modal',
+          'target' => '#timezone-dialog',
         ],
       ]
     ) . "\n" ?>
