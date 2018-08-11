@@ -1,6 +1,8 @@
 <?php
 namespace app\components\widgets;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use Yii;
 use app\models\Country;
 use app\models\Timezone;
@@ -39,20 +41,20 @@ class TimezoneDialog extends Dialog
             return '';
         }
 
-        return $this->renderTimezone($tz, true);
+        return $this->renderTimezone($tz, true, true);
     }
 
-    private function renderTimezone(Timezone $tz, bool $isCurrent): string
+    private function renderTimezone(Timezone $tz, bool $isCurrent, bool $renderGroup): string
     {
         if ($isCurrent) {
             return Html::tag(
                 'div',
-                $this->renderTimezoneDetail($tz),
+                $this->renderTimezoneDetail($tz, $renderGroup),
                 ['class' => 'list-group-item bg-primary text-light']
             );
         } else {
             return Html::a(
-                $this->renderTimezoneDetail($tz),
+                $this->renderTimezoneDetail($tz, $renderGroup),
                 'javascript:;',
                 [
                     'class' => 'list-group-item timezone-change text-dark',
@@ -64,7 +66,7 @@ class TimezoneDialog extends Dialog
         }
     }
 
-    private function renderTimezoneDetail(Timezone $tz): string
+    private function renderTimezoneDetail(Timezone $tz, bool $renderGroup): string
     {
         $flags = implode(' ', array_map(
             function (Country $country): string {
@@ -77,7 +79,19 @@ class TimezoneDialog extends Dialog
             $tz->countries
         ));
 
-        return Html::tag(
+        $ret = '';
+        if ($renderGroup) {
+            $ret .= Html::tag(
+                'div',
+                sprintf(
+                    '%s %s',
+                    Html::encode(Yii::t('app', $tz->group->name)),
+                    FA::fas('angle-double-right')->fw()
+                ),
+                ['class' => 'small']
+            );
+        }
+        $ret .= Html::tag(
             'div',
             implode('', [
                 Html::tag(
@@ -86,12 +100,17 @@ class TimezoneDialog extends Dialog
                 ),
                 Html::tag(
                     'span',
-                    Html::encode($tz->identifier),
+                    Html::encode(sprintf(
+                        '%s (%s)',
+                        $this->renderOffset($tz),
+                        $tz->identifier
+                    )),
                     ['class' => 'd-none d-sm-inline small']
                 ),
             ]),
             ['class' => 'd-flex justify-content-between']
         );
+        return $ret;
     }
 
     private function renderZoneGroups(): string
@@ -106,7 +125,11 @@ class TimezoneDialog extends Dialog
                     'div',
                     implode('', array_map(
                         function (Timezone $tz) use ($currentTz): string {
-                            return $this->renderTimezone($tz, $currentTz === $tz->identifier);
+                            return $this->renderTimezone(
+                                $tz,
+                                $currentTz === $tz->identifier,
+                                false
+                            );
                         },
                         $group->timezones
                     )),
@@ -139,6 +162,24 @@ class TimezoneDialog extends Dialog
                     ),
                 ],
             ]
+        );
+    }
+
+    private function renderOffset(Timezone $tz): string
+    {
+        $offset = (new DateTimeImmutable())
+            ->setTimestamp($_SERVER['REQUEST_TIME'] ?? time())
+            ->setTimezone(new DateTimeZone($tz->identifier))
+            ->getOffset();
+
+        $isEast = $offset >= 0;
+        $offset = abs($offset);
+
+        return sprintf(
+            '%s%02d:%02d',
+            $isEast ? '+' : '-',
+            floor($offset / 3600),
+            floor(($offset % 3600) / 60)
         );
     }
 }
