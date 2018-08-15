@@ -3,6 +3,10 @@ JS_SRCS := $(shell ls -1 resources/stat.ink/main.js/*.js)
 GULP := ./node_modules/.bin/gulp
 VENDOR_SHA256 := $(shell sha256sum -t composer.lock | awk '{print $$1}')
 
+NEW_RESOURCES := \
+	resources/dseg \
+	resources/stat.ink-2
+
 RESOURCE_TARGETS_MAIN := \
 	resources/.compiled/activity/activity.js \
 	resources/.compiled/app-link-logos/festink.png \
@@ -21,14 +25,6 @@ RESOURCE_TARGETS_MAIN := \
 	resources/.compiled/app-link-logos/switch.min.svg.gz \
 	resources/.compiled/counter/counter.css \
 	resources/.compiled/counter/counter.js \
-	resources/.compiled/dseg/dseg14.css \
-	resources/.compiled/dseg/dseg7.css \
-	resources/.compiled/dseg/fonts/DSEG14Classic-Italic.ttf \
-	resources/.compiled/dseg/fonts/DSEG14Classic-Italic.woff \
-	resources/.compiled/dseg/fonts/DSEG14Classic-Italic.woff2 \
-	resources/.compiled/dseg/fonts/DSEG7Classic-Italic.ttf \
-	resources/.compiled/dseg/fonts/DSEG7Classic-Italic.woff \
-	resources/.compiled/dseg/fonts/DSEG7Classic-Italic.woff2 \
 	resources/.compiled/flot-graph-icon/jquery.flot.icon.js \
 	resources/.compiled/gears/calc.js \
 	resources/.compiled/gh-fork-ribbon/gh-fork-ribbon.css \
@@ -104,11 +100,6 @@ SIMPLE_CONFIG_TARGETS := \
 	config/lepton.php \
 	config/twitter.php
 
-DSEG_VERSION := 0.41
-DSEG_RELEASE := https://github.com/keshikan/DSEG/archive/v$(DSEG_VERSION).tar.gz
-
-ADDITIONAL_LICENSES := resources/.compiled/dseg/LICENSE
-
 all: init migrate-db
 
 init: \
@@ -145,8 +136,12 @@ ikalog: all runtime/ikalog runtime/ikalog/repo runtime/ikalog/winikalog.html
 	./yii ikalog/update-ikalog
 	./yii ikalog/update-winikalog
 
-resource: $(RESOURCE_TARGETS) $(ADDITIONAL_LICENSES)
+resource: $(RESOURCE_TARGETS) $(NEW_RESOURCES)
 	./yii map-image2/generate
+
+.PHONY: $(NEW_RESOURCES)
+$(NEW_RESOURCES):
+	make -C $@
 
 composer-update: composer.phar
 	COMPOSER_ALLOW_SUPERUSER=1 ./composer.phar self-update
@@ -182,7 +177,6 @@ clean-resource:
 		resources/maps2/*.png \
 		resources/maps2/assets \
 		web/assets/* \
-		$(ADDITIONAL_LICENSES)
 
 vendor-archive: $(VENDOR_ARCHIVE_FILE) $(VENDOR_ARCHIVE_SIGN)
 	rsync -av --progress \
@@ -365,39 +359,6 @@ resources/.compiled/counter/counter.css: resources/counter/counter.less $(GULP)
 
 resources/.compiled/twitter/web-intents.js: resources/twitter/web-intents.js $(GULP)
 	$(GULP) js --in $< --out $@
-
-DSEG_ARCHIVE := resources/dseg/dseg-$(DSEG_VERSION).tar.gz
-
-resources/.compiled/dseg/fonts/DSEG14Classic-Italic.ttf: $(DSEG_ARCHIVE) resources/.compiled/dseg/fonts
-	tar -zx --to-stdout -f $< DSEG-$(DSEG_VERSION)/fonts/DSEG14-Classic/$(notdir $@) > $@
-	touch $@
-
-resources/.compiled/dseg/fonts/DSEG14Classic-Italic.woff: $(DSEG_ARCHIVE) resources/.compiled/dseg/fonts
-	tar -zx --to-stdout -f $< DSEG-$(DSEG_VERSION)/fonts/DSEG14-Classic/$(notdir $@) > $@
-	touch $@
-
-resources/.compiled/dseg/fonts/DSEG7Classic-Italic.ttf: $(DSEG_ARCHIVE) resources/.compiled/dseg/fonts
-	tar -zx --to-stdout -f $< DSEG-$(DSEG_VERSION)/fonts/DSEG7-Classic/$(notdir $@) > $@
-	touch $@
-resources/.compiled/dseg/fonts/DSEG7Classic-Italic.woff: $(DSEG_ARCHIVE) resources/.compiled/dseg/fonts
-	tar -zx --to-stdout -f $< DSEG-$(DSEG_VERSION)/fonts/DSEG7-Classic/$(notdir $@) > $@
-	touch $@
-
-resources/.compiled/dseg/%.css: resources/dseg/%.less $(GULP)
-	$(GULP) less --in $< --out $@
-
-resources/.compiled/dseg/fonts:
-	mkdir -p $@
-
-resources/.compiled/dseg/LICENSE: $(DSEG_ARCHIVE)
-	tar -zx --to-stdout -f $< DSEG-$(DSEG_VERSION)/DSEG-LICENSE.txt > $@
-
-resources/dseg/dseg-%.tar.gz:
-	mkdir -p $(dir $@)
-	curl -o $@ -sSL $(DSEG_RELEASE)
-
-%.woff2: %.ttf node_modules
-	node_modules/.bin/ttf2woff2 < $< > $@
 
 resources/.compiled/sillyname/sillyname.js: resources/sillyname/index.js $(GULP)
 	$(GULP) js --in $< --out $@

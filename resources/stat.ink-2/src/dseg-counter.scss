@@ -1,0 +1,14 @@
+.dseg-counter {
+  display: inline-block;
+  position: relative;
+  font-size: 1.618em;
+
+  .dseg-counter-bg {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #eee;
+    z-index: -1;
+  }
+}

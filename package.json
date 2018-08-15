@@ -27,7 +27,8 @@
     "postcss-cli": "^6.0.0",
     "sass": "^1.10",
     "svgo": "^1.0",
-    "ttf2woff2": "^2.0",
+    "ttf2woff": "^2.0.1",
+    "ttf2woff2": "^2.0.3",
     "uglify-js": "^3.4",
     "updates": "^4.1"
   }

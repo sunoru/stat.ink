@@ -11,8 +11,8 @@ use yii\web\AssetBundle;
 
 class DsegFontAsset extends AssetBundle
 {
-    public $sourcePath = '@app/resources/.compiled/dseg';
+    public $sourcePath = '@app/resources/dseg/dest';
     public $css = [
-        'dseg7.css',
+        'DSEG7Classic-RegularItalic.min.css',
     ];
 }

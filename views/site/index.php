@@ -3,6 +3,7 @@ use app\assets\CounterAsset;
 use app\assets\PaintballAsset;
 use app\components\helpers\CombinedBattles;
 use app\components\widgets\FA;
+use app\components\widgets\SevenSegment;
 use app\components\widgets\SnsWidget;
 use app\components\widgets\battle\BattleListWidget;
 use app\models\Battle;
@@ -14,7 +15,7 @@ use yii\helpers\Html;
 
 $this->context->layout = 'main';
 
-CounterAsset::register($this);
+// CounterAsset::register($this);
 PaintballAsset::register($this);
 ?>
 <div class="container">
@@ -50,31 +51,18 @@ PaintballAsset::register($this);
       ]
     ) . "\n" ?>
   </div>
-  <p class="text-right" style="margin-bottom:0">
-    <?= Html::tag(
-      'span',
-      sprintf(
-        'Users: %s',
-        Html::tag(
-          'span',
-          Html::encode(User::getRoughCount() ?? '?'),
-          ['class' => 'dseg-counter', 'data' => ['type' => 'users']]
-        )
-      ),
-      ['class' => 'nobr']
-    ) . "\n" ?>
-    <?= Html::tag(
-      'span',
-      sprintf(
-        'Battles: %s',
-        Html::tag(
-          'span',
-          Html::encode(Battle::getTotalRoughCount() ?? '?'),
-          ['class' => 'dseg-counter', 'data' => ['type' => 'battles']]
-        )
-      ),
-      ['class' => 'nobr']
-    ) . "\n" ?>
+  <div class="text-right mb-0">
+    Users:  
+    <?= SevenSegment::widget([
+      'label' => User::getRoughCount() ?? '?',
+      'type' => 'users',
+    ]) ?>,
+    Battles:
+    <?= SevenSegment::widget([
+      'label' => Battle::getTotalRoughCount() ?? '?',
+      'type' => 'battles',
+    ]) ?>
+  </div>
   </p>
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-8 col-lg-9">
