@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'DSEG7-Classic';
+    src: url('fonts/DSEG7Classic-RegularItalic.woff2') format('woff2'),
+         url('fonts/DSEG7Classic-RegularItalic.woff') format('woff'),
+         url('fonts/DSEG7Classic-RegularItalic.otf') format('opentype'),
+         url('fonts/DSEG7Classic-RegularItalic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+.dseg7 {
+    font-family: 'DSEG7-Classic', fantasy;
+
+    &.regular {
+        font-weight: normal;
+    }
+    
+    &.italic {
+        font-style: italic;
+    }
+}
